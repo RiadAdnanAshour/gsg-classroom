@@ -155,6 +155,9 @@ class ClassroomController extends Controller
         // العثور على الفصل باستخدام الـ ID
         $classrooms = Classroom::findOrFail($id);
         // حذف الصورة من التخزين
+        $classrooms->status = "archived";
+        $classrooms->save();
+    
         if ($classrooms->cover_image_path) {
             Storage::disk('public')->delete($classrooms->cover_image_path);
         }
@@ -178,6 +181,9 @@ class ClassroomController extends Controller
     {
         $classrooms = Classroom::onlyTrashed()->findOrFail($id);
         $classrooms->restore();
+
+        $classrooms->status = 'active';
+        $classrooms->save();
         return redirect()->route('classrooms.index')->with('success', "Classroom ({$classrooms->name}) restore successfully");
     }
 

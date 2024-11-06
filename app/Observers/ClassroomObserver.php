@@ -31,8 +31,7 @@ class ClassroomObserver
      */
     public function deleting(Classroom $classroom): void
     {
-        Log::info("Deleting classroom with ID: " . $classroom->id);
-        $classroom->status = 'deleted';
+        $classroom->status = 'archived';
         $classroom->save();
     }
     /**
