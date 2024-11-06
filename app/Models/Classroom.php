@@ -66,4 +66,17 @@ class Classroom extends Model
             'created_at' => now()
         ]);
     }
+    //get{AttributeName}Attribute
+    public function getNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+    public function getSecioneAttribute($value)
+    {
+        return ucfirst($value);
+    }
+    public function getCoverImagePathAttribute($value)
+    {
+        return $value ? asset('storage/' . $value) : asset('storage/images/classroom.jpg');
+    }
 }

@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::get('/classrooms/trashed', [ClassroomController::class, 'trashed'])
+    Route::get('/ ', [ClassroomController::class, 'trashed'])
         ->name('classrooms.trashed');
     Route::put('/classrooms/trashed/{classroom}', [ClassroomController::class, 'restore'])
         ->name('classrooms.restore');

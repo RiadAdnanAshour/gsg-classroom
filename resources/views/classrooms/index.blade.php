@@ -19,7 +19,7 @@
             @foreach ($classrooms as $classroom)
                 <div class="col-md-3 mb-4"> <!-- تعديل لإغلاق العمود بشكل صحيح -->
                     <div class="card h-100"> <!-- h-100 تجعل الكارد يأخذ الارتفاع بالكامل -->
-                        <img src="{{ asset('/storage/' . $classroom->cover_image_path) }}" class="card-img-top" alt="Classroom Image">
+                        <img src="{{ $classroom->cover_image_path }}" alt="Classroom Image">
                         <div class="card-body">
                             <h5 class="card-title">{{ $classroom->name }}</h5>
                             <p class="card-text">{{ $classroom->secione }} - {{ $classroom->room }}</p>
