@@ -16,4 +16,16 @@ class Topic extends Model
     // protected $keyType = 'int';
     // public $incrementing = true;
     public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'classroom_id',
+        'user_id'
+    ];
+    
+    
+    public function classworks()
+    {
+        return $this->hasMany(Classwork::class, 'topic_id', 'id');
+    }
 }

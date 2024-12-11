@@ -37,8 +37,12 @@
                     <strong>Code:</strong> 
                     <!-- مربع الكود مع لون عشوائي -->
                     <div class="code-box" id="classroomCode">{{ $classroom->code }}</div>
+                    
                     <p>invitation link: <a href="{{ $invitation_link }}">{{ $invitation_link }}</a> </p>
                     <button class="btn btn-sm btn-outline-secondary" onclick="copyCode()">Copy</button>
+                
+                
+                    <a href="{{ route('classrooms.classwork.index',$classroom->id) }}" class="btn btn-outline-dark">classworks</a>
                 </div>
 
                 <p class="card-text"><strong>Section:</strong> {{ $classroom->secione ? $classroom->secione : 'N/A' }}</p>

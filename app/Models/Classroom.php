@@ -8,11 +8,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Scopes\UserClassroomScope;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class Classroom extends Model
 {
     use HasFactory, SoftDeletes; // إضافة السمة
+
+    public function classworks(): HasMany
+    {
+        return $this->hasMany(Classwork::class, 'classroom_id', 'id');
+    }
+    public function topic() :HasMany
+    {
+        return $this->hasMany(Topic::class, 'classroom_id', 'id');
+    }
 
     protected $fillable = [
         'name',

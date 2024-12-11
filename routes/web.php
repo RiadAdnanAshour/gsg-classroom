@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ClassworkController;
 use App\Http\Controllers\JoinClassroomController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,13 +35,23 @@ Route::middleware('auth')->group(function () {
         ->name('classrooms.restore');
     Route::delete('/classrooms/trashed/{classroom}', [ClassroomController::class, 'forDelete'])
         ->name('classrooms.forDelete');
-        Route::resource('classrooms', ClassroomController::class)->names('classrooms');
-        Route::resource('topics', TopicsController::class)->names('topics');
-    
+
+    // Route::resource([
+    //     'classrooms'=> ClassroomController::class,
+    //     'topics'=> TopicsController::class,
+    //     'classrooms.classwork'=> ClassworkController::class,
+    // ]);
+    Route::resource('classrooms', ClassroomController::class);
+    Route::resource('topics', TopicsController::class);
+    Route::resource('classrooms.classwork', ClassworkController::class);
+
+
+
     Route::get('/classrooms/{classroom}/join', [JoinClassroomController::class, 'create'])
-      ->middleware('signed')
-      ->name('classrooms.join');
+        ->middleware('signed')
+        ->name('classrooms.join');
     Route::post('/classrooms/{classroom}/join', [JoinClassroomController::class, 'store']);
+
 });
 
 // تضمين مسارات المصادقة
