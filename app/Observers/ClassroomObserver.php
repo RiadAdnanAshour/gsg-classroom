@@ -31,6 +31,9 @@ class ClassroomObserver
      */
     public function deleting(Classroom $classroom): void
     {
+        if($classroom->isForceDeleting()){
+            return;
+        }
         $classroom->status = 'archived';
         $classroom->save();
     }

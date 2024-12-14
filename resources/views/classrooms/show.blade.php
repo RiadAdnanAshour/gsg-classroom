@@ -26,7 +26,7 @@
         <!-- بطاقة العرض للفصل الدراسي -->
         <div class="card">
             <!-- صورة الغلاف -->
-            <img  src="{{ $classroom->cover_image_path ? asset('storage/' . $classroom->cover_image_path) : 'https://via.placeholder.com/1200x400' }}"                  class="card-img-top" alt="Classroom Cover Image">
+            <img src="{{ $classroom->cover_image_path }}" alt="Classroom Image" width="400px">
 
             <div class="card-body">
                 <!-- عنوان الفصل -->

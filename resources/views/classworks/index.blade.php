@@ -36,24 +36,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($classworks as $classwork)
+                    @forelse ($classworks as $classwork)
                         <tr>
                             <td>{{ $classwork->title }}</td>
                             <td>{{ ucfirst($classwork->type) }}</td>
                             <td>{{ ucfirst($classwork->status) }}</td>
-                            <td>{{ $classwork->published_at ? $classwork->published_at->format('Y-m-d') : 'N/A' }}</td>
                             <td>
+                                @if($classwork->published_at)
+                                    {{ \Carbon\Carbon::parse($classwork->published_at)->format('Y-m-d') }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>                            <td>
                                 <!-- زر العرض -->
-                                <a href="{{ route('classrooms.classworks.show', [$classroom->id, $classwork->id]) }}"
+                                <a href="{{ route('classrooms.classwork.show', [$classroom->id, $classwork->id]) }}"
                                     class="btn btn-success btn-sm">View</a>
 
                                 <!-- زر التعديل -->
-                                <a href="{{ route('classrooms.classworks.edit', [$classroom->id, $classwork->id]) }}"
+                                <a href="{{ route('classrooms.classwork.edit', [$classroom->id, $classwork->id]) }}"
                                     class="btn btn-warning btn-sm">Edit</a>
 
                                 <!-- زر الحذف -->
                                 <form
-                                    action="{{ route('classrooms.classworks.destroy', [$classroom->id, $classwork->id]) }}"
+                                    action="{{ route('classrooms.classwork.destroy', [$classroom->id, $classwork->id]) }}"
                                     method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -62,7 +67,9 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                        @empty
+                        <p>Now Classwork found.</p>
+                    @endforelse
                 </tbody>
             </table>
         </div>

@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('signed')
         ->name('classrooms.join');
     Route::post('/classrooms/{classroom}/join', [JoinClassroomController::class, 'store']);
-
+    
 });
 
 // تضمين مسارات المصادقة

@@ -6,12 +6,25 @@ use App\Models\Classroom;
 use App\Models\Classwork;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class ClassworkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    protected function getType(Request $request)
+    {
+        $type = $request->query('type');
+        $allowed_types = [
+            Classwork::TYPE_ASSIGNEMNT,
+            Classwork::TYPE_MATERIAL,
+            Classwork::TYPE_QUESTION
+        ];
+        if (!in_array($type, $allowed_types)) {
+            $type = Classwork::TYPE_ASSIGNEMNT;
+        }
+        return $type;
+    }
+
     public function index(Classroom $classroom)
     {
         $classworks = $classroom->classworks()
@@ -27,9 +40,11 @@ class ClassworkController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Classroom $classroom)
+    public function create(Request $request, Classroom $classroom)
     {
-        return view('classworks.create', compact('classroom'));
+        $type =  $type = $this->getType($request);
+
+        return view('classworks.create', compact('classroom', 'type'));
     }
 
     /**
@@ -37,6 +52,7 @@ class ClassworkController extends Controller
      */
     public function store(Request $request, Classroom $classroom)
     {
+        $type =  $type = $this->getType($request);
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -48,15 +64,17 @@ class ClassworkController extends Controller
         $request->merge([
             'user_id' => Auth::id(),
             'classroom_id' => $classroom->id,
+            'type' => $type,
         ]);
 
         $classwork = $classroom->classworks()->create($request->all());
-        return redirect()->route('classrooms.classworks.index', $classroom->id)
+        return redirect()->route('classrooms.classwork.index', $classroom->id)
             ->with('success', 'classwork created!');
     }
+
     public function show(Classroom $classroom, Classwork $classwork)
     {
-        return view('classworks.show', compact('classroom', 'classwork'));
+        return view('classwork.show', compact('classroom', 'classwork'));
     }
 
     /**
@@ -101,7 +119,7 @@ class ClassworkController extends Controller
     {
         $classwork->delete();
 
-        return redirect()->route('classrooms.classworks.index', $classroom)
+        return redirect()->route('classrooms.classwork.index', $classroom)
             ->with('success', 'Classwork deleted successfully.');
     }
 }
