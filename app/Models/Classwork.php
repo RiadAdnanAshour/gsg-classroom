@@ -25,6 +25,12 @@ class Classwork extends Model
     {
         return $this->belongsTo(Topic::class,'topic_id','id');
     }
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+        ->wherePivot(['grade','status','submitted_at','created_at'])
+        ->using(ClassworkUser::class);
+    }
     protected $fillable =
     [
         'classroom_id',

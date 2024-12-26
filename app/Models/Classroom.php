@@ -24,6 +24,26 @@ class Classroom extends Model
         return $this->hasMany(Topic::class, 'classroom_id', 'id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(
+        User::class,            //Related model
+        'classroom_user',       //Pivot table
+        'classroom_id',         //Fk for current mode in the pivot table
+        'user_id',              //Fk for realted mode in the pivot table    
+        'id',                   // PK for current model
+        'id'
+    );                  //PK for related model    
+    }
+    public function teacher()
+    {
+        return $this->users()->wherePivot('role', '=' , 'teacher');
+    }
+    public function student()
+    {
+        return $this->users()->wherePivot('role', '=' , 'student');
+    }
+
     protected $fillable = [
         'name',
         'secione',
@@ -69,6 +89,10 @@ class Classroom extends Model
 
     public function join($user_id, $role = 'student')
     {
+        $this->users()->attach($user_id,[
+            'role' => $role,
+            'created_at' => now()
+        ]);
         DB::table('classroom_user')->insert([
             'classroom_id' => $this->id,
             'user_id' => $user_id,

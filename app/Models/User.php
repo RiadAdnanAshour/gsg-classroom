@@ -44,4 +44,27 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function classrooms()
+    {
+        return $this->belongsToMany(
+        Classroom::class,            //Related model
+        'classroom_user',       //Pivot table
+        'user_id',         //Fk for current mode in the pivot table
+        'classroom_id',              //Fk for realted mode in the pivot table    
+        'id',                   // PK for current model
+        'id'
+    );                  //PK for related model    
+    }
+
+    public function createdC1asssrooms()
+    {
+        return $this->hasMany(Classroom::class, 'user_id');
+    }
+    public function classwork()
+    {
+        return $this->belongsToMany(User::class)
+        ->wherePivot(['grade','status','submitted_at','created_at'])
+        ->using(ClassworkUser::class);
+    }
 }

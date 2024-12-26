@@ -42,12 +42,13 @@
                             <td>{{ ucfirst($classwork->type) }}</td>
                             <td>{{ ucfirst($classwork->status) }}</td>
                             <td>
-                                @if($classwork->published_at)
+                                @if ($classwork->published_at)
                                     {{ \Carbon\Carbon::parse($classwork->published_at)->format('Y-m-d') }}
                                 @else
                                     N/A
                                 @endif
-                            </td>                            <td>
+                            </td>
+                            <td>
                                 <!-- زر العرض -->
                                 <a href="{{ route('classrooms.classwork.show', [$classroom->id, $classwork->id]) }}"
                                     class="btn btn-success btn-sm">View</a>
@@ -67,7 +68,7 @@
                                 </form>
                             </td>
                         </tr>
-                        @empty
+                    @empty
                         <p>Now Classwork found.</p>
                     @endforelse
                 </tbody>

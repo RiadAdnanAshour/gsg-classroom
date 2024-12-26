@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassworkController;
+use App\Http\Controllers\ClassroomPeopleController;
 use App\Http\Controllers\JoinClassroomController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,7 +52,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('signed')
         ->name('classrooms.join');
     Route::post('/classrooms/{classroom}/join', [JoinClassroomController::class, 'store']);
-    
+    Route::get('/classrooms/{classroom}/people',[ClassroomPeopleController::class, 'index'])
+    ->name('classrooms.people');
 });
 
 // تضمين مسارات المصادقة
