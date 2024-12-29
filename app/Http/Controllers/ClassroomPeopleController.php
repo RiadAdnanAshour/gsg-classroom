@@ -9,8 +9,12 @@ class ClassroomPeopleController extends Controller
 {
     public function index(Classroom $classroom)
     {
-        
+        return view('classrooms.people', compact(['classroom']));
+    }
+    public function destroy(Request $request, Classroom $classroom)
+    {
+        $classroom->users()->detach($request->input('user_id'));
 
-        return view('classrooms.people',compact(['classroom']));
+        return redirect()->route('classrooms.people', $classroom->id)->with('success', 'user removed!');
     }
 }

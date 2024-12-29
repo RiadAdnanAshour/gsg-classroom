@@ -61,10 +61,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Classroom::class, 'user_id');
     }
-    public function classwork()
+    public function classworks()
     {
         return $this->belongsToMany(User::class)
         ->wherePivot(['grade','status','submitted_at','created_at'])
         ->using(ClassworkUser::class);
+    }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

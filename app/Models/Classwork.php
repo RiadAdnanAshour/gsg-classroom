@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Classwork extends Model
 {
@@ -31,6 +32,11 @@ class Classwork extends Model
         ->wherePivot(['grade','status','submitted_at','created_at'])
         ->using(ClassworkUser::class);
     }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     protected $fillable =
     [
         'classroom_id',

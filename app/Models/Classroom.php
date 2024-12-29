@@ -90,15 +90,15 @@ class Classroom extends Model
     public function join($user_id, $role = 'student')
     {
         $this->users()->attach($user_id,[
-            'role' => $role,
+        'role' => $role,
             'created_at' => now()
         ]);
-        DB::table('classroom_user')->insert([
-            'classroom_id' => $this->id,
-            'user_id' => $user_id,
-            'role' => $role,
-            'created_at' => now()
-        ]);
+        // DB::table('classroom_user')->insert([
+        //     'classroom_id' => $this->id,
+        //     'user_id' => $user_id,
+        //     'role' => $role,
+        //     'created_at' => now()
+        // ]);
     }
     //get{AttributeName}Attribute
     public function getNameAttribute($value)

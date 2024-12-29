@@ -41,9 +41,23 @@
             <input type="date" name="published_at" id="published_at" class="form-control">
         </div>
 
+        <!-- قائمة الأسماء مع زر الاختيار -->
+        <div class="form-group">
+            <label>Select People</label>
+            <div class="form-check">
+                @foreach ($classroom->users as $user)
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="users[]" value="{{ $user->id }}" id="user-{{ $user->id }}" checked  >
+                        <label class="form-check-label" for="user-{{ $user->id }}">
+                            {{ $user->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Create</button>
     </form>
 </div>
 
 @endsection
- 

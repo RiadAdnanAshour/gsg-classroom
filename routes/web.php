@@ -5,6 +5,7 @@ use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ClassworkController;
 use App\Http\Controllers\ClassroomPeopleController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\JoinClassroomController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/classrooms/{classroom}/join', [JoinClassroomController::class, 'store']);
     Route::get('/classrooms/{classroom}/people',[ClassroomPeopleController::class, 'index'])
     ->name('classrooms.people');
+    Route::delete('/classrooms/{classroom}/people',[ClassroomPeopleController::class, 'destroy'])
+    ->name('classrooms.people.destroy');
+    
+
+    Route::post('comments.store', [CommentController::class, 'store'])->name('comments.store');
+    
+
 });
 
 // تضمين مسارات المصادقة

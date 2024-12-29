@@ -74,7 +74,9 @@ class ClassworkController extends Controller
 
     public function show(Classroom $classroom, Classwork $classwork)
     {
-        return view('classwork.show', compact('classroom', 'classwork'));
+        
+        $classwork->load('comments.user'); // جلب التعليقات مع بيانات المستخدمين المرتبطة
+        return view('classworks.show', compact('classroom', 'classwork'));
     }
 
     /**
@@ -108,7 +110,7 @@ class ClassworkController extends Controller
             'options' => $request->input('options') ? json_encode($request->input('options')) : null,
         ]);
 
-        return redirect()->route('classrooms.classworks.index', $classroom)
+        return redirect()->route('classrooms.classwork.index', $classroom)
             ->with('success', 'Classwork updated successfully.');
     }
 
